@@ -1,0 +1,35 @@
+INSERT INTO adoptant 
+Values (null,"Dupont","Paul","France","Lille","03.20.00.00.00");
+
+INSERT INTO adoptant
+Values(null,"Jacques","Pierre","France","Marseille","03.50.00.00.00");
+
+INSERT INTO refuge
+Values (null,"Lille","03.20.01.11.00");
+
+INSERT INTO refuge
+Values (null,"Montpellier","03.50.01.11.00");
+
+INSERT INTO fournisseur 
+Values (null,"Tom&Co","Lille",59000,3,"Rue Roland",null,"03.20.01.00.00");
+
+INSERT INTO fournisseur 
+Values (null,"Animalis","Montpellier",34000,5,"Rue des Fausses",null,"03.50.01.00.00");
+
+INSERT INTO membre
+Values (null,"Durand","Jean","responsable","Lille",59000,10,"Rue des champs","Appt 10",31,"06.00.00.00.00",1),
+(null,"Donald","John","nettoyeur de cage","Montpellier",34000,32,"Avenue des champignons","Appt33",50,"06.01.00.00.00",2);
+
+INSERT INTO fourniture 
+Values (null,"pâtée","nourriture",1.50,1);
+
+INSERT INTO fourniture
+Values (null,"pâtée","nourriture",1.50,1),
+(null,"poicou","jouet",2,2);
+
+INSERT INTO animal
+Values (null,"Max",9,"2010-10-10",null,"cocker","chien",null,1),
+(null,"Cookie",3,"2015-01-01","2015-01-10","devon rex","chat",2,2);
+
+Insert into fournisseur_has_refuge 
+values (1,1),(2,2)
