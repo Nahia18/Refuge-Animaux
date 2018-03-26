@@ -49,5 +49,11 @@ Where fournisseur_id_four = 1 and numrue_four = 3;
 Select *
 from fournisseur, fourniture
 Where fournisseur.id_four = fourniture.fournisseur_id_four
-and prix_fourni = (select min(prix_fourni) from fourniture)
+and prix_fourni >= Any (select min(prix_fourni) from fourniture)
+Group by nom_four;
+
+Select *
+from fournisseur, fourniture
+Where fournisseur.id_four = fourniture.fournisseur_id_four
+and prix_fourni >= All (select max(prix_fourni) from fourniture)
 Group by nom_four;
