@@ -15,8 +15,10 @@ Where nom_mb
 Like "%an%" ;
 
 Select count(id_animal) 
-As 'nombre animaux'
-From animal ;
+As 'nombre animaux' 
+From animal natural join adoptant
+Where animal.adoptant_id_adoptant=adoptant.id_adoptant 
+Having count(id_adoptant>=1);
 
 Select age_ani as age_animal, date_adoption - date_entree_ani as 'durée en jour', date_adoption, date_entree_ani
 From animal 
