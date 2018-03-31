@@ -1,3 +1,5 @@
+-- Requêtes permettant d'insérer des données dans les tables adoptant, refuge, fournisseur, membre, fourniture, animal et fournisseur_has_refuge  
+
 INSERT INTO adoptant 
 Values (null,"Dupont","Paul","France","Lille","03.20.00.00.00");
 
