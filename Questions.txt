@@ -1,59 +1,75 @@
+-- Renvoie le contenu de la colonne espece_ani de la table animal, sans les dublons
 Select distinct espece_ani
 From animal ;
 
+-- Renvoie le nom du 1er animal dans l'ordre alphabétique, dans une colonne renommée "nom_ani"
 Select nom_ani as nom_animal
 From animal
-Order by nom_ani asc ;
+Order by nom_ani asc 
+Limit 1 ;
 
+-- Renvoie tout le contenu de la table animal, pour les animaux rentrés après le 1er janvier 2016
 Select *
 From animal
 Where date_entree_ani > '2016-01-01';
 
+-- Renvoie tout le contenu de la table membre si le nom du membre comprend la combinaison "an"
 Select *
 From membre
 Where nom_mb
 Like "%an%" ;
 
+-- Renvoie le nombre d'animaux adoptés dans une colonne renommée "nombre animaux" 
 Select count(id_animal) 
 As 'nombre animaux' 
 From animal natural join adoptant
 Where animal.adoptant_id_adoptant=adoptant.id_adoptant 
-Having count(id_adoptant>=1);
+Having count(id_adoptant>=1) ;
 
+-- Renvoie l'âge de l'animal dans un colonne renommée "age_animal", la durée d'adoption en jours dans une colonne renommée "durée en jour", 
+-- la date d'adoption et la date d'entrée de l'animal
 Select age_ani as age_animal, date_adoption - date_entree_ani as 'durée en jour', date_adoption, date_entree_ani
 From animal 
-Where date_adoption is not null;
+Where date_adoption is not null ;
 
+-- Renvoie le nom des membres dans une colonne renommée "nom_de_membres", la ville du refuge dans une colonne renommée "ville du refuge",
+-- et l'id du refuge pour les membres venant du refuge de Lille
 Select nom_mb as 'nom_des_membres' , vill_ref as 'ville du refuge' , id_refuge
 From membre natural join refuge
-Where refuge.id_refuge = membre.Refuge_id_refuge AND vill_ref = "Lille";
+Where refuge.id_refuge = membre.Refuge_id_refuge AND vill_ref = "Lille" ;
 
+-- Renvoie la ville du refuge dans une colonne renommée "ville du refuge", le nom de l'animal et la date d'adoption, 
+-- sans les doublons
 Select vill_ref as 'ville du refuge', nom_ani, date_adoption 
 From animal natural join refuge 
 Where date_adoption is not null
-Group by nom_ani;
+Group by nom_ani ;
 
-Select * from animal
-where adoptant_id_adoptant is null ; 
-
+-- Renvoie le contenu de la table animal pour les animaux sans adoptant
 select *
 from animal
 left outer join adoptant
 on animal.Adoptant_id_adoptant = adoptant.id_adoptant
-where Adoptant_id_adoptant is null;
+where Adoptant_id_adoptant is null ;
 
+-- Renvoie le contenu de la table fournisseur pour le fournisseur dont l'id est 1 et qui livre le refuge de Lille
 Select *
 From  fournisseur natural join Fournisseur_has_Refuge natural join refuge
-Where fournisseur_id_four = 1 and numrue_four = 3;
+Where fournisseur.id_four = Fournisseur_has_Refuge.Fournisseur_id_four 
+And fournisseur_has_refuge.refuge_id_refuge = refuge.id_refuge
+And fournisseur_id_four = 1 
+And vill_ref = "Lille" ;
 
+-- Renvoie le contenu de la table fournisseur si le prix de la fourniture est inférieur ou égal à une des fournitures ayant le prix minimum
 Select *
 from fournisseur, fourniture
 Where fournisseur.id_four = fourniture.fournisseur_id_four
-and prix_fourni >= Any (select min(prix_fourni) from fourniture)
-Group by nom_four;
+and prix_fourni <= Any (select min(prix_fourni) from fourniture)
+Group by nom_four ;
 
+-- Renvoie le contenu de la table fournisseur si le prix de la fourniture est supérieur ou égal à toutes les fournitures ayant le prix maximum
 Select *
 from fournisseur, fourniture
 Where fournisseur.id_four = fourniture.fournisseur_id_four
 and prix_fourni >= All (select max(prix_fourni) from fourniture)
-Group by nom_four;
+Group by nom_four ;
